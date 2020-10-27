@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace demo_api.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class SampleDataController : ControllerBase
@@ -15,8 +15,8 @@ namespace demo_api.Controllers
        {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
-        [HttpGet]
+        [Authorize]
+        [HttpGet("WeatherForecasts")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();
