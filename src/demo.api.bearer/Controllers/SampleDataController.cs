@@ -9,13 +9,14 @@ namespace demo.api.bearer.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] 
     public class SampleDataController : ControllerBase
     {
         private static string[] Summaries = new[]
        {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-        [Authorize]
+        
         [HttpGet("WeatherForecasts")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
