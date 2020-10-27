@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
-namespace demo_api
+namespace demo.api.bearer
 {
     public class Startup
     {
@@ -34,15 +34,15 @@ namespace demo_api
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
-                    options.Authority = this.Configuration["Jwt:Authority"];
-                    options.Audience = this.Configuration["Jwt:Audience"];
+                    options.Authority = Configuration["Jwt:Authority"];
+                    options.Audience = Configuration["Jwt:Audience"];
                     options.IncludeErrorDetails = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false,
                         //ValidAudiences = new[] { "master-realm", "account" },
                         ValidateIssuer = true,
-                        ValidIssuer = this.Configuration["Jwt:Authority"],
+                        ValidIssuer = Configuration["Jwt:Authority"],
                         ValidateLifetime = false
                     };
                 });

@@ -4,9 +4,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace demo_api.Controllers
+namespace demo.api.bearer.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class SampleDataController : ControllerBase
