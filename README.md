@@ -12,7 +12,7 @@ https://www.keycloak.org/docs/latest/getting_started/index.html
 
 ## Create Client in Keycloak.
 
-![](images/create_client.JPg)
+![](/images/create_client.JPG)
 
 ## Keycloak´s roles
 
@@ -31,8 +31,8 @@ Add both roles to the user.
 
 By default, Keycloak doesn’t publish roles to the id and access tokens, but we will need them to authorize our users in the Asp.Net Core API. This is a configuration that we need to do in Keycloak’s client options. Go back to the .Net Core App client options page and select the Mappers tab you should see a number of built-in mappers.
 
-![](images/User_Realm_Roles.jpg)
-![](images/User_Client_Roles.jpg)
+![](images/User_Realm_Roles.JPG)
+![](images/User_Client_Roles.JPG)
 
 ## Running
 
@@ -72,7 +72,7 @@ curl   -d "client_id=demo-app"   -d "username=admin"   -d "password=admin"   -d 
 ```
 
 2. Test the api from postman. We should copy the access token and paste in the parameter "Access Token"
-   ![](images/postman.jpg)
+   ![](images/postman.JPG)
 
 - Commands:
 
