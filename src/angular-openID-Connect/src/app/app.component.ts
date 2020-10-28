@@ -5,11 +5,13 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'OpenId-Connect';
   constructor(private oauthService: OAuthService) {
+    //this.oauthService.initCodeFlow();
+    //this.oauthService.initLoginFlow();
     this.oauthService.configure(authConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();

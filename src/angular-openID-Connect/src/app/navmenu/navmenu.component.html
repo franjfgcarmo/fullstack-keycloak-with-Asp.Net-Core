@@ -1,46 +1,17 @@
-<div class='main-nav'>
-    <div class='navbar navbar-inverse'>
-        <div class='navbar-header'>
-            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                <span class='sr-only'>Toggle navigation</span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-            </button>
-            <a class='navbar-brand' [routerLink]="['/home']">test</a>
-        </div>
-        <div class='clearfix'></div>
-        <div class='navbar-collapse collapse'>
-            <ul class='nav navbar-nav'>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/home']">
-                        <span class='glyphicon glyphicon-home'></span> Home
-                    </a>
-                </li>
-               <!--  <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/counter']">
-                        <span class='glyphicon glyphicon-education'></span> Counter
-                    </a>
-                </li> -->
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/fetch-data']">
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
-                    </a>
-                </li>
-                <li *ngIf="!givenName">
-                    <button class="btn btn-default" (click)="login()">
-                        Login
-                    </button>
-                </li>
-                <li *ngIf="givenName">
-                    <h1>Hello, {{givenName}}</h1>
-                </li>
-                <li *ngIf="givenName">
-                    <button class="btn btn-default" (click)="logout()">
-                        Logout
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title *ngIf="givenName">Hello, {{givenName}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="bold" [routerLink]="['/home']">Home</mat-button-toggle>
+      <mat-button-toggle value="italic" [routerLink]="['/fetch-data']">Fetch data</mat-button-toggle>
+      <mat-button-toggle value="underline" *ngIf="!givenName" (click)="login()">Login</mat-button-toggle>
+      <mat-button-toggle value="underline" *ngIf="givenName" (click)="logout()">logout</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-card-content>
+</mat-card>
+
+
+
+

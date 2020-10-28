@@ -18,5 +18,6 @@ export const authConfig: AuthConfig = {
     // Remove the requirement of using Https to simplify the demo
     // THIS SHOULD NOT BE USED IN PRODUCTION, USE A CERTIFICATE FOR YOUR IDP
     // IN PRODUCTION
-    requireHttps: false
+    requireHttps: false,
+    showDebugInformation: true
 };

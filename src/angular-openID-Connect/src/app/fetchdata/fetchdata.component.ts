@@ -16,7 +16,7 @@ export class FetchDataComponent implements OnInit {
 
     ngOnInit(): void {
       const httpOptions = {
-        headers: new HttpHeaders({ Authorization: 'Bearer ' + this.oauthService.getAccessToken()}),
+        headers: new HttpHeaders({ Authorization: `Bearer ${this.oauthService.getAccessToken()}` })
       };
 
       this.http.get('https://localhost:5001/api/SampleData/WeatherForecasts', httpOptions).subscribe((result: WeatherForecast[]) => {
