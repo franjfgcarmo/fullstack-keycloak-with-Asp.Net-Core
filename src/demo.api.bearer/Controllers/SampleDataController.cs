@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,13 @@ namespace demo.api.bearer.Controllers
         };
         
         [HttpGet("WeatherForecasts")]
+        [Authorize(Roles = "Administrators")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
+            foreach (var claim in User.Claims)
+            {
+                Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
+            }
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

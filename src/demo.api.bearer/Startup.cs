@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 
 namespace demo.api.bearer
 {
@@ -46,6 +48,14 @@ namespace demo.api.bearer
                         ValidateLifetime = true, 
                         RequireExpirationTime = true                        
                     };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnTokenValidated = context =>
+                        {
+                            MapKeycloakRolesToRoleClaims(context);
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
             services.AddCors(options =>
             {
@@ -57,7 +67,10 @@ namespace demo.api.bearer
                         .AllowAnyHeader();
                     });
             });
-            services.AddAuthorization();
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("Administrators", policy => policy.RequireClaim("user_realm_roles", "[Administrators]"));
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +87,23 @@ namespace demo.api.bearer
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private static void MapKeycloakRolesToRoleClaims(TokenValidatedContext context)
+        {
+            //var resourceAccess = JObject.Parse(context.Principal.FindFirst("resource_access").Value);
+            //var clientResource = resourceAccess[context.Principal.FindFirstValue("aud")];
+            var clientRoles = context.Principal.Claims.Where(w=>w.Type== "user_realm_roles").ToList();
+            var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
+            if (claimsIdentity == null)
+            {
+                return;
+            }
+
+            foreach (var clientRole in clientRoles)
+            {
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, clientRole.Value));
+            }
         }
     }
 }
