@@ -20,7 +20,7 @@ namespace demo.api.bearer
             Configuration = configuration;
             Environment = environment;
         }
-
+        private string PolicyOrigingAllowed => "AngularApp";
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -43,10 +43,20 @@ namespace demo.api.bearer
                         //ValidAudiences = new[] { "master-realm", "account" },
                         ValidateIssuer = true,
                         ValidIssuer = Configuration["Jwt:Authority"],
-                        ValidateLifetime = false
+                        ValidateLifetime = true, 
+                        RequireExpirationTime = true                        
                     };
                 });
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(PolicyOrigingAllowed,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
             services.AddAuthorization();
         }
 
@@ -59,7 +69,7 @@ namespace demo.api.bearer
             }
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseCors(PolicyOrigingAllowed);
             app.UseAuthentication();
             app.UseAuthorization();
 
